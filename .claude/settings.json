@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const o=JSON.parse(d);const p=(o.tool_input||{}).file_path||(o.tool_input||{}).command||'';if(p.includes('.protected_files_for_test_hook')){process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'Access to .protected_files_for_test_hook folder is blocked'}}));process.exit(2);}});\"",
+            "statusMessage": "Checking protected paths..."
+          }
+        ]
+      }
+    ]
+  }
+}
